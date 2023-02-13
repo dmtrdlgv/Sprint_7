@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.hasItem;
 
 public class CourierSteps {
 
+    Response response;
     private final CourierClient courierClient = new CourierClient();
 
     //Создание нового курьера
@@ -25,6 +26,14 @@ public class CourierSteps {
                 then().
                 assertThat().
                 body("ok",equalTo(true));
+    }
+
+    //Шаг создания курьера и проверки его успешного создания
+    @Step("Step of creating and verifying a courier")
+    public void creatingAndVerifyingCourier(Courier courier){
+        response = courierClient.newCourier(courier);
+        checkStatusCode(response, 201);
+        checkResponseBodyForNewCourier(response);
     }
 
     //Вход курьера в систему
