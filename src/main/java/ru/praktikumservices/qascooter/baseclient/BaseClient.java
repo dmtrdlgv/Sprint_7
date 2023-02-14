@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 
 public class BaseClient {
     private final String JSON = "application/json";
-    private static String baseUrl = "https://qa-scooter.praktikum-services.ru";
+    private static final String baseUrl = "https://qa-scooter.praktikum-services.ru";
 
     //config основного клиента
     private final RestAssuredConfig config = RestAssuredConfig.newConfig()
@@ -38,8 +38,9 @@ public class BaseClient {
     //универсальный метод POST с телом запроса в виде объекта с сериализацией
     protected Response doPostRequest(String uri, Object body) {
         return given()
-                .log()
-                .all()
+                .log().uri()
+                .and()
+                .log().body()
                 .config(config)
                 .header("Content-Type", JSON)
                 .body(body)
@@ -49,6 +50,6 @@ public class BaseClient {
     protected Response doDeleteRequest(String uri, Integer courierId) {
         return given()
                 .config(config)
-                .delete(baseUrl + uri + Integer.toString(courierId));
+                .delete(baseUrl + uri + courierId);
     }
 }

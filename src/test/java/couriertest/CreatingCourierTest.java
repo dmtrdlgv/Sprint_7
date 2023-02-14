@@ -14,6 +14,7 @@ public class CreatingCourierTest {
     private final CourierSteps courierSteps = new CourierSteps();
     private Response response;
     private Courier courier;
+    private int courierId;
 
     @Before
     public void setUp(){
@@ -49,7 +50,7 @@ public class CreatingCourierTest {
     @DisplayName("Checking the prohibition of creating a duplicate courier")
     @Description("Negative test of creating duplicate courier")
     public void checkProhibitionOfCreatingDuplicateCourier() {
-        courierSteps.creatingAndVerifyingCourier(courier);
+        courierSteps.creatingCourierAndCheckResponse(courier);
         response = courierSteps.createNewCourier(courier);
         courierSteps.checkStatusCode(response,409);
         courierSteps.checkErrorMessageInResponseBody(response, "Этот логин уже используется. Попробуйте другой.");
@@ -57,10 +58,9 @@ public class CreatingCourierTest {
 
     @After
     public void tearDown(){
-        int courierId;
         courier.setFirstname(null); //т.к. в методе удаления передается только два параметра
         response = courierSteps.loginCourier(courier);
         courierId = response.jsonPath().getInt("id");
-        courierSteps.deleteCourier(courierId);
+        courierSteps.deleteCourierAndCheckResponse(courierId);
     }
 }

@@ -31,8 +31,8 @@ public class ParametrizedNegativeNewCourierTest {
         courierWithoutLogin.generateRandomFirstname(5, 10);
 
         Courier courierWithoutPassword = new Courier();
-        courierWithoutPassword.generateRandomPassword(10);
-        courierWithoutLogin.generateRandomFirstname(5, 10);
+        courierWithoutPassword.generateRandomLogin(10);
+        courierWithoutPassword.generateRandomFirstname(5, 10);
 
         return new Object[][]{
                 {courierWithoutLogin, 400, "Недостаточно данных для создания учетной записи"},

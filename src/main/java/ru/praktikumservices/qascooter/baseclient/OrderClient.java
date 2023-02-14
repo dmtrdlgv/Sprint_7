@@ -1,7 +1,6 @@
 package ru.praktikumservices.qascooter.baseclient;
 
 import io.restassured.response.Response;
-
 import java.util.HashMap;
 
 public class OrderClient extends BaseClient{

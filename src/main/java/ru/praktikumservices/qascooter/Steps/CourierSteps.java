@@ -5,8 +5,7 @@ import io.restassured.response.Response;
 import ru.praktikumservices.qascooter.baseclient.CourierClient;
 import ru.praktikumservices.qascooter.model.Courier;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.*;
 
 public class CourierSteps {
 
@@ -22,15 +21,15 @@ public class CourierSteps {
     //Проверка тела ответа успешного запроса создания нового курьера
     @Step("Check success response body for POST /courier")
     public void checkResponseBodyForNewCourier(Response response) {
-        response.
-                then().
-                assertThat().
-                body("ok",equalTo(true));
+        response
+                .then()
+                .assertThat()
+                .body("ok",equalTo(true));
     }
 
-    //Шаг создания курьера и проверки его успешного создания
+    //Шаг создания курьера и проверки ответа
     @Step("Step of creating and verifying a courier")
-    public void creatingAndVerifyingCourier(Courier courier){
+    public void creatingCourierAndCheckResponse(Courier courier){
         response = courierClient.newCourier(courier);
         checkStatusCode(response, 201);
         checkResponseBodyForNewCourier(response);
@@ -45,9 +44,11 @@ public class CourierSteps {
     //Проверка тела ответа успешного запроса входа курьера в систему
     @Step("Check success response body for POST /courier/login")
     public void checkResponseBodyForCourierLogin(Response response) {
-        response.
-                then().body(hasItem("id"));
+        response
+                .then()
+                .body("$",hasKey("id"));
     }
+
 
     //Отправка запроса удаления курьера из системы
     @Step("Send DELETE request to /courier/")
@@ -62,6 +63,13 @@ public class CourierSteps {
                 .then()
                 .assertThat()
                 .body("ok", equalTo(true));
+    }
+    //Шаг удаления курьера и проверки ответа
+    @Step ("Delete courier and check response")
+    public void deleteCourierAndCheckResponse(int courierId) {
+        response = deleteCourier(courierId);
+        checkStatusCode(response,200);
+        checkResponseBodyForDeleteCourier(response);
     }
 
     //Универсальные метода для запросов курьера
@@ -78,7 +86,8 @@ public class CourierSteps {
     public void checkErrorMessageInResponseBody(Response response, String expectedMessage) {
         response
                 .then()
-                .assertThat().body("message",equalTo(expectedMessage));
+                .assertThat()
+                .body("message",equalTo(expectedMessage));
     }
 
 
