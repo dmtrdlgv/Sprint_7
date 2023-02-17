@@ -45,7 +45,6 @@ public class ParametrizedNegativeNewCourierTest {
     @Description("Parametrized negative test to checking creating new courier without one of parameters")
     public void checkCreatingANewCourier_withoutOneOfParameters_ExpectedError(){
         response = courierSteps.createNewCourier(courier);
-        courierSteps.checkStatusCode(response, expectedStatusCode);
-        courierSteps.checkErrorMessageInResponseBody(response,expectedResponseErrorMessage);
+        courierSteps.checkStatusCodeAndErrorMessageInResponseBody(response, expectedStatusCode, expectedResponseErrorMessage);
     }
 }

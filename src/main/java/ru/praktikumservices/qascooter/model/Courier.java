@@ -1,6 +1,5 @@
 package ru.praktikumservices.qascooter.model;
 
-
 import org.apache.commons.lang3.RandomStringUtils;
 
 //Данные для авторизации курьера

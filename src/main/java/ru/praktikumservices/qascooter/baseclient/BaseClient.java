@@ -4,9 +4,7 @@ import io.restassured.config.RedirectConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
 import io.restassured.response.Response;
-
 import java.util.HashMap;
-
 import static io.restassured.RestAssured.given;
 
 public class BaseClient {
@@ -21,6 +19,7 @@ public class BaseClient {
     //универсальный метод Get
     protected Response doGetRequest(String uri) {
         return given()
+                .log().uri()
                 .config(config)
                 .header("Content-Type", JSON)
                 .get(baseUrl + uri);
@@ -29,6 +28,7 @@ public class BaseClient {
     //универсальный метод Get с параметрами
     protected Response doGetRequest(String uri, HashMap params) {
         return given()
+                .log().uri()
                 .config(config)
                 .header("Content-Type", JSON)
                 .queryParams(params)
@@ -47,9 +47,19 @@ public class BaseClient {
                 .post(baseUrl + uri);
     }
 
-    protected Response doDeleteRequest(String uri, Integer courierId) {
+    protected Response doDeleteRequest(String uri) {
         return given()
+                .log().uri()
                 .config(config)
-                .delete(baseUrl + uri + courierId);
+                .delete(baseUrl + uri);
+    }
+
+    protected Response doPutRequest(String uri, HashMap<String, String> params) {
+        return given()
+                .log().uri()
+                .config(config)
+                .header("Content-Type", JSON)
+                .params(params)
+                .put(baseUrl + uri);
     }
 }

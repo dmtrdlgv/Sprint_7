@@ -29,8 +29,7 @@ public class CourierLoginTest {
     @Description("Base positive test courier login with checking status code and response body")
     public void checkCourierLogin_ValidData_ExpectedOkAndId() {
         response = courierSteps.loginCourier(courier);
-        courierSteps.checkStatusCode(response, 200);
-        courierSteps.checkResponseBodyForCourierLogin(response);
+        courierSteps.checkStatusCodeAndResponseBodyForCourierLogin(response, 200);
     }
 
     @After

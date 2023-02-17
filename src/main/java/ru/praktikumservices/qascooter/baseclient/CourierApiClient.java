@@ -3,7 +3,7 @@ package ru.praktikumservices.qascooter.baseclient;
 import io.restassured.response.Response;
 import ru.praktikumservices.qascooter.model.Courier;
 
-public class CourierClient extends BaseClient{
+public class CourierApiClient extends BaseClient{
 
     private final String baseUrl = "https://qa-scooter.praktikum-services.ru";
     private final String newCourierEndPoint = "/api/v1/courier";
@@ -20,8 +20,6 @@ public class CourierClient extends BaseClient{
     }
 
     public Response deleteCourier(int courierId) {
-        return doDeleteRequest(deleteCourierEndPoint, courierId);
+        return doDeleteRequest(deleteCourierEndPoint + courierId);
     }
-
-
 }

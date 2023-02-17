@@ -29,8 +29,7 @@ public class CreatingCourierTest {
     @Description("Base positive test for /api/v1/courier")
     public void checkCreateNewCourier_AllParameters_ExpectedOkAndTrue() {
         response = courierSteps.createNewCourier(courier);
-        courierSteps.checkStatusCode(response,201);
-        courierSteps.checkResponseBodyForNewCourier(response);
+        courierSteps.checkStatusCodeAndResponseBodyForNewCourier(response, 201);
     }
 
 /* Тест успешного создания курьера без имени т.к. в документации не указано что должна быть ошибка создания
@@ -42,8 +41,7 @@ public class CreatingCourierTest {
     public void checkCreateNewCourier_WithoutFirstname_ExpectedOkAndTrue() {
         courier.setFirstname(null);
         response = courierSteps.createNewCourier(courier);
-        courierSteps.checkStatusCode(response,201);
-        courierSteps.checkResponseBodyForNewCourier(response);
+        courierSteps.checkStatusCodeAndResponseBodyForNewCourier(response, 201);
     }
 
     @Test
@@ -52,8 +50,7 @@ public class CreatingCourierTest {
     public void checkProhibitionOfCreatingDuplicateCourier() {
         courierSteps.creatingCourierAndCheckResponse(courier);
         response = courierSteps.createNewCourier(courier);
-        courierSteps.checkStatusCode(response,409);
-        courierSteps.checkErrorMessageInResponseBody(response, "Этот логин уже используется. Попробуйте другой.");
+        courierSteps.checkStatusCodeAndErrorMessageInResponseBody(response, 409,"Этот логин уже используется. Попробуйте другой.");
     }
 
     @After

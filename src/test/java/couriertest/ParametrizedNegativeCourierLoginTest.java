@@ -13,7 +13,7 @@ public class ParametrizedNegativeCourierLoginTest {
 
     private static final CourierSteps courierSteps = new CourierSteps();
     private static Courier courier;
-    private static Courier baseCourier;
+    private static Courier initialCourier;
     private final int expectedStatusCode;
     private final String expectedErrorMessage;
     private static Response response;
@@ -27,28 +27,28 @@ public class ParametrizedNegativeCourierLoginTest {
 
     @Parameterized.Parameters
     public static Object[][] getData() {
-        baseCourier = new Courier();
-        baseCourier.generateRandomLogin(20);
-        baseCourier.generateRandomPassword(20);
-        baseCourier.generateRandomFirstname(10, 20);
-        courierSteps.creatingCourierAndCheckResponse(baseCourier);
+        initialCourier = new Courier();
+        initialCourier.generateRandomLogin(20);
+        initialCourier.generateRandomPassword(20);
+        initialCourier.generateRandomFirstname(10, 20);
+        courierSteps.creatingCourierAndCheckResponse(initialCourier);
 
         //Курьер без Логина
         Courier courierWithoutLogin = new Courier();
-        courierWithoutLogin.setPassword(baseCourier.getPassword());
+        courierWithoutLogin.setPassword(initialCourier.getPassword());
 
         //Курьер без Пароля
         Courier courierWithoutPassword = new Courier();
-        courierWithoutPassword.setLogin(baseCourier.getLogin());
+        courierWithoutPassword.setLogin(initialCourier.getLogin());
 
         //Курьер с неверным Логином
         Courier courierWithInvalidLogin = new Courier();
         courierWithInvalidLogin.generateRandomLogin(20);
-        courierWithInvalidLogin.setPassword(baseCourier.getPassword());
+        courierWithInvalidLogin.setPassword(initialCourier.getPassword());
 
         //Курьер с неверным Паролем
         Courier courierWithInvalidPassword = new Courier();
-        courierWithInvalidPassword.setLogin(baseCourier.getLogin());
+        courierWithInvalidPassword.setLogin(initialCourier.getLogin());
         courierWithInvalidPassword.generateRandomPassword(20);
 
         //Несозданный партнер (несуществующий)
@@ -66,15 +66,14 @@ public class ParametrizedNegativeCourierLoginTest {
     }
 
     @Test
-    public void checkCourierLogin_InvalidData_ExpectError(){
+    public void checkCourierLogin_InvalidData_ExpectError() {
         response = courierSteps.loginCourier(courier);
-        courierSteps.checkStatusCode(response, expectedStatusCode);
-        courierSteps.checkErrorMessageInResponseBody(response,expectedErrorMessage);
+        courierSteps.checkStatusCodeAndErrorMessageInResponseBody(response,expectedStatusCode, expectedErrorMessage);
     }
 
     @AfterClass
     public static void afterTestsForParameter() {
-        response = courierSteps.loginCourier(baseCourier);
+        response = courierSteps.loginCourier(initialCourier);
         courierId = response.jsonPath().getInt("id");
         courierSteps.deleteCourierAndCheckResponse(courierId);
     }
