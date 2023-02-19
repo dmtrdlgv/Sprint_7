@@ -1,12 +1,10 @@
 package ordertest;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.praktikumservices.qascooter.Steps.OrderSteps;
+import ru.praktikumservices.qascooter.steps.OrderSteps;
 import ru.praktikumservices.qascooter.model.Order;
 
 import java.util.Arrays;
@@ -29,8 +27,7 @@ public class ParametrizedPositiveCreatingOrderTest {
         this.color = color;
     }
 
-
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Параметр заказа color: {2} ожидаемый код: {1}")
     public static Object[][] getData() {
         initialOrder = new Order();
         initialOrder.generateRandomRequiredFields();
@@ -43,8 +40,6 @@ public class ParametrizedPositiveCreatingOrderTest {
     }
 
     @Test
-    @DisplayName("Test of creating new order with different value of color")
-    @Description("Base positive test of creating new order with different not required key 'color'")
     public void checkSuccessCreatingOrder_validDataAndColorIsBlack_expectedOkTrue() {
         order.setColor(color);
         response = orderSteps.createNewOrder(order);

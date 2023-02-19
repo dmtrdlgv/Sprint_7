@@ -1,12 +1,10 @@
 package couriertest;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.praktikumservices.qascooter.Steps.CourierSteps;
+import ru.praktikumservices.qascooter.steps.CourierSteps;
 import ru.praktikumservices.qascooter.model.Courier;
 
 @RunWith(Parameterized.class)
@@ -23,7 +21,7 @@ public class ParametrizedNegativeNewCourierTest {
         this.expectedResponseErrorMessage = expectedResponseErrorMessage;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{index}: expected status code: {1}; expected message: {2}")
     public static Object[][] getData() {
 
         Courier courierWithoutLogin = new Courier();
@@ -41,8 +39,6 @@ public class ParametrizedNegativeNewCourierTest {
     }
 
     @Test
-    @DisplayName("Check creating new courier without one of parameters")
-    @Description("Parametrized negative test to checking creating new courier without one of parameters")
     public void checkCreatingANewCourier_withoutOneOfParameters_ExpectedError(){
         response = courierSteps.createNewCourier(courier);
         courierSteps.checkStatusCodeAndErrorMessageInResponseBody(response, expectedStatusCode, expectedResponseErrorMessage);

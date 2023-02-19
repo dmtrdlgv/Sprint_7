@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.praktikumservices.qascooter.Steps.OrderSteps;
+import ru.praktikumservices.qascooter.steps.OrderSteps;
 import ru.praktikumservices.qascooter.model.Order;
 import ru.praktikumservices.qascooter.model.OrderList;
 

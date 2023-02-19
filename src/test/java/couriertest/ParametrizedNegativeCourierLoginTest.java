@@ -5,7 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.praktikumservices.qascooter.Steps.CourierSteps;
+import ru.praktikumservices.qascooter.steps.CourierSteps;
 import ru.praktikumservices.qascooter.model.Courier;
 
 @RunWith(Parameterized.class)
@@ -25,7 +25,7 @@ public class ParametrizedNegativeCourierLoginTest {
         this.expectedErrorMessage = expectedErrorMessage;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{index}: expected status code: {1}; expected message: {2}")
     public static Object[][] getData() {
         initialCourier = new Courier();
         initialCourier.generateRandomLogin(20);
@@ -77,6 +77,4 @@ public class ParametrizedNegativeCourierLoginTest {
         courierId = response.jsonPath().getInt("id");
         courierSteps.deleteCourierAndCheckResponse(courierId);
     }
-
-
 }

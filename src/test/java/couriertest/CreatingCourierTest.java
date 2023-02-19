@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.praktikumservices.qascooter.Steps.CourierSteps;
+import ru.praktikumservices.qascooter.steps.CourierSteps;
 import ru.praktikumservices.qascooter.model.Courier;
 
 public class CreatingCourierTest {

@@ -1,4 +1,4 @@
-package ru.praktikumservices.qascooter.Steps;
+package ru.praktikumservices.qascooter.steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
